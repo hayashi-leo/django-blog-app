@@ -13,9 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    # from django documentation regarding to include()
+    # 'Whenever Django encounters include(), it chops off whatever part of the URL
+    # matched up to that point and send the remaining string to the included URLconf for
+    # further processing'.
+    url(r'^$', include('blog.urls')),
+
 ]
