@@ -1,18 +1,55 @@
+
+<!-- Tell django to use 'static' template tag to build the URL for
+the given relative path using the configured STATICFILES_STORAGE.
+ django.contrib.staticfiles help you manage 'static files'.
+ In your settings file, define 'STATIC_URL' path.  For example:
+ STATIC_URL = '/static/' -> this means that static file is located
+ in <app>/static path -->
+
+{% load static %}
+
 <html>
+
+
+ {% block bootstrap %}
+ {% include 'blog/head_css.html' %}
+ {% endblock %}
+
+ {% block styles %}
+ <link rel="stylesheet" href="{% static 'blog/post_list.css' %}">
+ {% endblock %}
+
+ <style>
+     // h1 a { color: red; }
+ </style>
 <head>
+
+
     <title>Django Girls blog </title>
 </head>
 <body>
-    <div>
+
+    <div class="page-header">
         <h1><a href="/">Django Girls Blog</a></h1>
     </div>
 
-    {{% for post in posts %}}
-        <div>
-            <p>published: {{ post.published_date }}</p>
-            <h1><a href="">{{ post.title }}</a></h1>
-            <p>{{ post.text | linebreaksbr }}</p><!-- pipe posts' text through a filter to conver line-breaks into paragraphs-->
+
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+                {% for post in posts %}
+                    <div class="post">
+                        <div class="date">
+                            <p>published: {{ post.published_date }}</p>
+                        </div>
+                        <h1><a href="">{{ post.title }}</a></h1>
+                        <p>{{ post.text | linebreaksbr }}</p><!-- pipe posts' text through a filter to conver line-breaks into paragraphs-->
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-    {{% endfor %}}s
+    </div>
+
+
 </body>
 </html>

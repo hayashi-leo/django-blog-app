@@ -119,5 +119,54 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static') # Only used in production
 
+#### STATICFILES_DIRS only used during  development
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),  # BASE_DIR is the directory where manage.py is located
+]
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder'
+)
+
+'''
+Serving static files can be achieved in these ways:
+1. per django docs, adding a 'static/my-app/' directory to 'my-app' (see docs about namespacing)
+like so:
++BASE_DIR
+    + my-app/
+        +static/
+            +my-app/
+                post_list.css
+        +templates/
+            +my-app/
+                post_list.html
+    + static/
+    manage.py
+
+2. define a new top level directory and add that to STATICFILES_DIRS in settings like so
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
++BASE_DIR
+    + my-app/        
+        +templates/
+            +my-app/
+                post_list.html
+    + static/
+        +my-app/
+            post_list.css
+    manage.py
+    
+usage in a template (html)
+
+    {% load static %}
+    {% block style %}
+        <link rel='stylesheet' href="{% static 'my_app/post_list.css'%}">
+    {% endblock %}
+    
+'''
