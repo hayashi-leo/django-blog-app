@@ -22,6 +22,7 @@ urlpatterns = [
     # 'Whenever Django encounters include(), it chops off whatever part of the URL
     # matched up to that point and send the remaining string to the included URLconf for
     # further processing'.
-    url(r'^$', include('blog.urls')),
-
+    url(r'^', include('blog.urls')),  # not that if you are including 'app.urls' do that
+                                      # terminate regex search with '$' symbol.
+                                      # as in r'^$', this will produce an error!!!
 ]

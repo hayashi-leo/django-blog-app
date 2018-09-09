@@ -6,6 +6,8 @@ the given relative path using the configured STATICFILES_STORAGE.
  STATIC_URL = '/static/' -> this means that static file is located
  in <app>/static path -->
 
+{% extends 'blog/base.html' %}
+
 {% load static %}
 
 <html>
@@ -33,23 +35,21 @@ the given relative path using the configured STATICFILES_STORAGE.
         <h1><a href="/">Django Girls Blog</a></h1>
     </div>
 
-
-    <div class="content container">
-        <div class="row">
-            <div class="col-md-8">
-                {% for post in posts %}
-                    <div class="post">
-                        <div class="date">
-                            <p>published: {{ post.published_date }}</p>
-                        </div>
-                        <h1><a href="">{{ post.title }}</a></h1>
-                        <p>{{ post.text | linebreaksbr }}</p><!-- pipe posts' text through a filter to conver line-breaks into paragraphs-->
-                    </div>
-                {% endfor %}
+    {% block content %}
+        {% for post in posts %}
+            <div class="post">
+                <div class="date">
+                    <p>published: {{ post.published_date }}</p>
+                </div>
+                <!-- use django template tag 'url' to redirect to
+                post_detail url passing post.pk as pk argument.
+                pk stands for primary key of our Post model.
+                Remember 'post' variable was passed by our view -->
+                <p> post.pk = {{ post.pk }}</p>
+                <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+                <p>{{ post.text | linebreaksbr }}</p><!-- pipe posts' text through a filter to conver line-breaks into paragraphs-->
             </div>
-        </div>
-    </div>
-
-
+        {% endfor %}
+    {% endblock %}
 </body>
 </html>
