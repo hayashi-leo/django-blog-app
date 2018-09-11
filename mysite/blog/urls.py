@@ -11,6 +11,8 @@ urlpatterns = [
 
     url(r'^$', blog_views.post_list, name='post_list'),
     # this url approach to extract the primary key is deprecated in django 2.x
-    url(r'^post/(?P<pk>\d+)/$', blog_views.post_detail, name='post_detail'),
+    url(r'^posting/(?P<pk>\d+)/$', blog_views.post_detail, name='post_detail'),
+    url(r'^posting/new', blog_views.post_new, name='post_new'),
+    url(r'^posting/(?P<pk>\d+)/edit/', blog_views.post_edit, name='post_edit'),
 ]
 

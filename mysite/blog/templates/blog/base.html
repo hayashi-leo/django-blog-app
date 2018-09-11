@@ -23,18 +23,22 @@ the given relative path using the configured STATICFILES_STORAGE.
      // h1 a { color: red; }
  </style>
 <head>
-
-
     <title>Django Girls blog </title>
 </head>
 <body>
 
     <div class="page-header">
-        <h1><a href="/">Django Girls Blog</a></h1>
+        <h1><a href="/">Django Girls Blog Header</a></h1>
+        {% if user.is_authenticated %}
+        <a href="{% url 'post_new' %} class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+        {# onliner-comment: provided by bootstrap, and displays a plus sign #}
+        {% endif %}
     </div>
     <div class="content container">
+
         <div class="row">
             <div class="col-md-8">
+
                 {% block content %}
                 {% endblock %}
             </div>

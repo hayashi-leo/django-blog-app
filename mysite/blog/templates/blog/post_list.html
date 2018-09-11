@@ -36,18 +36,32 @@ the given relative path using the configured STATICFILES_STORAGE.
     </div>
 
     {% block content %}
-        {% for post in posts %}
+        {% for poop in posts %}
             <div class="post">
                 <div class="date">
-                    <p>published: {{ post.published_date }}</p>
+                    <p>published: {{ poop.published_date }}</p>
                 </div>
-                <!-- use django template tag 'url' to redirect to
+                {% comment %}
+                use django template tag 'url' to redirect to
                 post_detail url passing post.pk as pk argument.
                 pk stands for primary key of our Post model.
-                Remember 'post' variable was passed by our view -->
-                <p> post.pk = {{ post.pk }}</p>
-                <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-                <p>{{ post.text | linebreaksbr }}</p><!-- pipe posts' text through a filter to conver line-breaks into paragraphs-->
+                Remember 'post' variable was passed by our view.
+                {% endcomment %}
+                <p> post.pk = {{ poop.pk }}</p>
+
+                {% comment %}
+                note that on blog.urls.py the url for 'post_details'
+                add 'post' before primary key pk, like so
+                ../post/4/
+                in this case, using {% url template tag%} django looks
+                into url name and extracts the url string to compose the href link.
+
+                Don't use <!-- --> to comment django templates as django will continue
+                to parse data within html comment tags.
+                {% endcomment %}
+
+                <h1><a href="{% url 'post_detail' pk=poop.pk %}">{{ poop.title }}</a></h1>
+                <p>{{ poop.text | linebreaksbr }}</p> {# pipe posts' text through as filter to convert line-breaks into paragraphs #}
             </div>
         {% endfor %}
     {% endblock %}
